@@ -200,7 +200,7 @@ ComplexVariable solver::operator-(const ComplexVariable& x1,const complex<double
 
 ComplexVariable solver::operator-(const complex<double> k,const ComplexVariable& x1) // k - (a+bi) = (k-a) + bi
 {
-    return ComplexVariable( - x1._a, - x1._b, k - x1._c);
+    return ComplexVariable( -x1._a, -x1._b, k - x1._c);
 }
 
 
@@ -238,19 +238,20 @@ ComplexVariable solver::operator*(const complex<double> k,const ComplexVariable&
 ComplexVariable solver::operator/(const ComplexVariable& x1,const ComplexVariable& x2) // (a+bi)/(c+di) = (ac+bd)/(c^2+d^2)+(-ad+bc)/(c^2+d^2)
 {
     complex<double> new_a = x1._a,new_b = x1._b, new_c = x1._c;
-    if(x1._a != complex<double>(0) && x2._a != complex<double>(0)){
+    if(x1._a != complex<double>(0,0) && x2._a != complex<double>(0,0)){
+        new_a = 0;
         new_c = x1._c + x1._a/x2._a;
-        new_a = complex<double>(0,0); 
+         
     }
 
     if(x1._a != complex<double>(0) && x2._b != complex<double>(0)){
+       new_a = 0;
        new_b = x1._b + x1._a/x2._b;
-       new_a = complex<double>(0,0);
     }
 
     if(x1._b != complex<double>(0) && x2._b != complex<double>(0)){
        new_c = x1._c + x1._b / x2._b; 
-       new_b = complex<double>(0,0);
+       new_b = 0;
     }
     return ComplexVariable(new_a, new_b, new_c);
 }
@@ -286,16 +287,12 @@ ComplexVariable solver::operator^(const ComplexVariable& x,const int k) // (a+bi
     if(k == 0) 
         return ComplexVariable(0, 0, 1);
     
-    else if(k == 1) 
+    if(k == 1) 
         return ComplexVariable(x._a,x._b,x._c);
     
-    else if(k == 2){
-         new_a = x._a + x._b * x._b;
-        new_b = 0;
-        new_c = x._c;
-        return ComplexVariable(new_a, new_b, new_c);
-    }
-
+    if(k == 2)
+        return ComplexVariable(x._a + (x._b * x._b), 0, x._c);
+    
     else throw runtime_error("invalid"); 
       
 }
@@ -309,22 +306,26 @@ ComplexVariable solver::operator==(const ComplexVariable& x1 ,const ComplexVaria
 
 ComplexVariable solver::operator==(const ComplexVariable& x,const double k) // (a+bi) == k ==> (a-k)+bi == 0
 {
-    return ComplexVariable(x._a-k,x._b-k, x._c-k);
+    complex<double> new_c =  x._c + complex<double>(-1)*k; 
+    return ComplexVariable(x._a,x._b, new_c);
 }
 
 ComplexVariable solver::operator==(const double k,const ComplexVariable& x) // k == (a+bi) ==> (k-a)-bi == 0
 {
-    return ComplexVariable(k-x._a, k-x._b, k-x._c);
+    complex<double> new_c =  complex<double>(-1)*k + x._c;
+    return ComplexVariable(x._a, x._b, new_c);
 }
 
 ComplexVariable solver::operator==(const ComplexVariable& x,const complex<double> k) 
 {
-    return ComplexVariable(x._a-k,x._b-k, x._c-k);
+    complex<double> new_c =  x._c + complex<double>(-1)*k; 
+    return ComplexVariable(x._a,x._b, new_c);
 }
 
 ComplexVariable solver::operator==(const complex<double> k,const ComplexVariable& x) 
 {
-    return ComplexVariable(k-x._a, k-x._b, k-x._c);
+    complex<double> new_c =  complex<double>(-1)*k + x._c;
+    return ComplexVariable(x._a, x._b, new_c);
 }
 
 //-------------------------------------------------------------------------------------------------
