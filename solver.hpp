@@ -3,7 +3,11 @@
 //
 
 #pragma once
+#include <stdlib.h>
+#include <iostream>
 #include <complex>
+
+using namespace std;
 
 namespace solver
 {
@@ -11,14 +15,19 @@ namespace solver
     class RealVariable 
     {
         public:
-            double a;
-            double b;
-            double c;
+            double a,b,c;
 
         //Constructor
-        RealVariable(double a ,double b, double c);
-        RealVariable(): a(0), b(1), c(0){}
+        RealVariable(): a(0), b(1), c(0){};
+        RealVariable(double a ,double b, double c):a(a),b(b),c(c){};
+        ~RealVariable();
 
+
+        // RealVariable::RealVariable(double a ,double b, double c){
+        //     this->a = a;
+        //     this->b = b;
+        //     this->c = c;
+        // }
 
         //Operators
 
@@ -43,7 +52,7 @@ namespace solver
         friend RealVariable operator/(const double, const RealVariable&);
 
         //power
-        friend RealVariable operator^(const RealVariable&, const double);
+        friend RealVariable operator^(const RealVariable&, const int);
 
         //equal
         friend RealVariable operator ==(const RealVariable&, const RealVariable&);
@@ -55,15 +64,23 @@ namespace solver
 
     class ComplexVariable
     {
-        public: 
-           double _re;
-           double _im;
+        public:
+            complex<double> _a,_b,_c;
 
-        //Constructor
-        ComplexVariable(double _re, double _im);
-        ComplexVariable(): _re(0.0), _im(0.0){}
+    
+            ComplexVariable(): _a(0),_b(1),_c(0){};
+            ComplexVariable(const complex<double> _a, const complex<double> _b, const complex<double> _c): _a(_a), _b(_b), _c(_c){};
+            ~ComplexVariable();
 
-        ///Operators
+        // ComplexVariable::ComplexVariable(const complex<double> _a, const complex<double> _b, const complex<double> _c)
+        // {
+        //     this->_a;
+        //     this->_b;
+        //     this->_c;
+        // }
+
+
+        // ///Operators
 
         //plus 
         friend ComplexVariable operator+(const ComplexVariable&,const ComplexVariable&);
@@ -79,6 +96,7 @@ namespace solver
         friend ComplexVariable operator-(const double,const ComplexVariable&);
         friend ComplexVariable operator-(const ComplexVariable&,const complex<double>);
         friend ComplexVariable operator-(const complex<double>,const ComplexVariable&);
+      
 
         //multiplication
         friend ComplexVariable operator*(const ComplexVariable&,const ComplexVariable&);
@@ -86,6 +104,7 @@ namespace solver
         friend ComplexVariable operator*(const double,const ComplexVariable&);
         friend ComplexVariable operator*(const ComplexVariable&,const complex<double>);
         friend ComplexVariable operator*(const complex<double>,const ComplexVariable&);
+    
 
         //division
         friend ComplexVariable operator/(const ComplexVariable&,const ComplexVariable&);
@@ -93,9 +112,11 @@ namespace solver
         friend ComplexVariable operator/(const double,const ComplexVariable&);
         friend ComplexVariable operator/(const ComplexVariable&,const complex<double>);
         friend ComplexVariable operator/(const complex<double>,const ComplexVariable&);
+  
 
         //power 
-        friend ComplexVariable operator^(const ComplexVariable&,const double);
+        friend ComplexVariable operator^(const ComplexVariable&,const int);
+
 
         //equal
         friend ComplexVariable operator==(const ComplexVariable&,const ComplexVariable&);
@@ -107,5 +128,7 @@ namespace solver
     }; // end complex 
 
     double solve(const RealVariable&);
-    double solve(const ComplexVariable&);
-}
+    complex<double> solve(const ComplexVariable&);
+    ostream &operator<<(ostream&, complex<double>);
+
+};
