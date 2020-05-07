@@ -185,12 +185,12 @@ ComplexVariable solver::operator-(const ComplexVariable& x1,const ComplexVariabl
 
 ComplexVariable solver::operator-(const ComplexVariable& x1,const double k)// (a+bi) - k = (a-k) + bi 
 {
-    return ComplexVariable(x1._a - k, x1._b, x1._c-k);
+    return ComplexVariable(x1._a, x1._b, x1._c-k);
 }
 
 ComplexVariable solver::operator-(const double k,const ComplexVariable& x1) // k - (a+bi) = (k-a) + bi
 {
-    return ComplexVariable( - x1._a, - x1._b, k - x1._c);
+    return ComplexVariable( -x1._a, -x1._b, k - x1._c);
 }
 
 ComplexVariable solver::operator-(const ComplexVariable& x1,const complex<double> k)// (a+bi) - k = (a-k) + bi 
@@ -312,8 +312,8 @@ ComplexVariable solver::operator==(const ComplexVariable& x,const double k) // (
 
 ComplexVariable solver::operator==(const double k,const ComplexVariable& x) // k == (a+bi) ==> (k-a)-bi == 0
 {
-    complex<double> new_c =  complex<double>(-1)*k + x._c;
-    return ComplexVariable(x._a, x._b, new_c);
+    complex<double> new_c =  x._c + complex<double>(-1)*k; 
+    return ComplexVariable(x._a,x._b, new_c);
 }
 
 ComplexVariable solver::operator==(const ComplexVariable& x,const complex<double> k) 
@@ -324,8 +324,8 @@ ComplexVariable solver::operator==(const ComplexVariable& x,const complex<double
 
 ComplexVariable solver::operator==(const complex<double> k,const ComplexVariable& x) 
 {
-    complex<double> new_c =  complex<double>(-1)*k + x._c;
-    return ComplexVariable(x._a, x._b, new_c);
+    complex<double> new_c =  x._c + complex<double>(-1)*k; 
+    return ComplexVariable(x._a,x._b, new_c);
 }
 
 //-------------------------------------------------------------------------------------------------
