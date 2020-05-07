@@ -7,7 +7,6 @@ TEST_CASE("Test")
 {
  RealVariable x;
 
-
      CHECK(solve(2*x-4 == 10) ==7);
      CHECK(solve(3*x-5 == 1) ==2);
      CHECK(solve(4*x-4 == 16) ==5);
@@ -118,7 +117,5 @@ TEST_CASE("Test")
      CHECK_THROWS(solve(x/0-0+0==20));
      CHECK_THROWS(solve(0*x+5.0==10));
      CHECK_THROWS(solve(0*x-7.0==30));
-     CHECK_THROWS(solve(0*x+11==40));
-
-     
+     CHECK_THROWS(solve(0*x+11==40));    
 }

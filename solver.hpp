@@ -20,7 +20,7 @@ namespace solver
         //Constructor
         RealVariable(): a(0), b(1), c(0){};
         RealVariable(double a ,double b, double c):a(a),b(b),c(c){};
-        ~RealVariable();
+        //~RealVariable();
 
 
         // RealVariable::RealVariable(double a ,double b, double c){
@@ -70,7 +70,7 @@ namespace solver
     
             ComplexVariable(): _a(0),_b(1),_c(0){};
             ComplexVariable(const complex<double> _a, const complex<double> _b, const complex<double> _c): _a(_a), _b(_b), _c(_c){};
-            ~ComplexVariable();
+            //~ComplexVariable();
 
         // ComplexVariable::ComplexVariable(const complex<double> _a, const complex<double> _b, const complex<double> _c)
         // {
